@@ -1,0 +1,19 @@
+{
+  "name": "zelf",
+  "version": "0.0.0",
+  "description": "Support for yourself",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpfeil/zelf.git"
+  },
+  "author": "Doug Pfeil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dpfeil/zelf/issues"
+  },
+  "homepage": "https://github.com/dpfeil/zelf#readme"
+}
