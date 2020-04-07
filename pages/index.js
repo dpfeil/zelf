@@ -12,8 +12,6 @@ export default function Index() {
     }
     return (
       <div>
-        <Link href="/about">
-            <a>About Page {CalendarAPI.getBlah()}</a>
         <Head>
         <script async defer src="https://apis.google.com/js/api.js"></script>
         </Head>
