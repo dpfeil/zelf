@@ -1,2 +1,0 @@
-[context.dev]
-  command = "npm run dev"
