@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 import { CalendarAPI } from '../api';
 import { useTodos } from '../hooks';
 
@@ -11,12 +12,16 @@ export default function Index() {
     }
     return (
       <div>
+        <Head>
+        <script async defer src="https://apis.google.com/js/api.js"></script>
+        </Head>
         <Link href="/about">
-            <a>About Page {CalendarAPI.getBlah()}</a>
+            <a>About Page</a>
         </Link>
         <button onClick={addTodo}>Add todo</button>
         {todos.map(d=>(<div key={d}>{d}</div>))}
         <p>Hello Next.js</p>
+        <CalendarAPI />
       </div>
     );
   }
