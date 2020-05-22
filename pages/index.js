@@ -1,27 +1,35 @@
-import Link from 'next/link';
-import Head from 'next/head';
-import { CalendarAPI } from '../api';
-import { useTodos } from '../hooks';
+import { Button } from '@blueprintjs/core';
+import { useTodos, useSession } from '../hooks';
+import { Container, Element, Calendar } from '../modules';
+
+// import { CalendarAPI } from '../api';
+
+const style = {
+  gridColumnStart: 'middle-start',
+  gridColumnEnd: 'middle-end',
+  // gridRowStart: 'row1-start',
+  // gridRowEnd: 'row1-end',
+};
 
 export default function Index() {
-    const [todos, setTodos] = useTodos();
+  const [todos, setTodos] = useTodos();
 
-    const addTodo = () => {
-      const todo = Math.round(100*Math.random()) + '';
-      setTodos([...todos,todo]);
-    }
-    return (
-      <div>
-        <Head>
-        <script async defer src="https://apis.google.com/js/api.js"></script>
-        </Head>
-        <Link href="/about">
-            <a>About Page</a>
-        </Link>
-        <button onClick={addTodo}>Add todo</button>
-        {todos.map(d=>(<div key={d}>{d}</div>))}
-        <p>Hello Next.js</p>
-        <CalendarAPI />
-      </div>
-    );
-  }
+  const addTodo = () => {
+    const todo = `${Math.round(100 * Math.random())}`;
+    setTodos([...todos, todo]);
+  };
+
+  return (
+    <Container>
+      <Element style={style}>
+        <Button onClick={addTodo}>Add todo</Button>
+        {todos.map((d) => (
+          <div key={d}>{d}</div>
+        ))}
+      </Element>
+      <Element style={style}>
+        <Calendar />
+      </Element>
+    </Container>
+  );
+}
