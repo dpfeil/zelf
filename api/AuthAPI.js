@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as firebase from 'firebase/app';
+import fetch from 'cross-fetch';
 import 'firebase/auth';
 import gapi from './gapi';
 
@@ -121,19 +122,33 @@ const googleSignOut = () => {
     .then(() => console.log('firebase: sign out complete'));
 };
 
-const gapiLoad = () => {
+const keyLoad = () => {
+  if (typeof API_KEY !== 'undefined') {
+    return new Promise((resolve) => {
+      resolve(
+        JSON.stringify({
+          clientId: CLIENT_ID,
+          apiKey: API_KEY,
+        }),
+      );
+    }).then((response) => JSON.parse(response));
+  }
+  return fetch('/.netlify/functions/getKeys').then((response) =>
+    response.json(),
+  );
+};
+
+const gapiLoad = (data) => {
   return new Promise((resolve) => {
-    gapi.load('client:auth2', () => resolve());
+    gapi.load('client:auth2', () => resolve(data));
   });
 };
 
-const initClient = () => {
-  console.log('apiKey', API_KEY);
-  console.log('clientId', CLIENT_ID);
+const initClient = (data) => {
   return gapi.client
     .init({
-      apiKey: API_KEY,
-      clientId: CLIENT_ID,
+      apiKey: data.apiKey,
+      clientId: data.clientId,
       discoveryDocs: DISCOVERY_DOCS,
       scope: SCOPES,
     })
@@ -145,7 +160,9 @@ const initClient = () => {
 };
 
 const initialize = () => {
-  return gapiLoad().then(() => initClient());
+  return keyLoad()
+    .then((data) => gapiLoad(data))
+    .then((data) => initClient(data));
 };
 
 /**
