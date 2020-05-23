@@ -27,7 +27,7 @@ const printItems = () => {
 const Calendar = () => {
   return (
     <div>
-      <Button className="bp3-minimal" text="get events" onClick={printItems} />
+      <Button text="get events" onClick={printItems} />
       <pre id="content" style={{ whiteSpace: 'pre-wrap' }} />
     </div>
   );
