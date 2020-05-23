@@ -7,9 +7,6 @@ import gapi from './gapi';
 const CLIENT_ID = process.env.clientId;
 const API_KEY = process.env.apiKey;
 
-console.log(CLIENT_ID);
-console.log(API_KEY);
-
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
@@ -48,8 +45,8 @@ const useGapiAuth = () => {
 
   useEffect(() => {
     async function getUser() {
-      const fetcher = await initialize();
-      console.log('auth is initialized yay');
+      await initialize();
+      console.log('auth is initialized');
       gapi.auth2.getAuthInstance().isSignedIn.listen(onChange);
       onChange(gapi.auth2.getAuthInstance().isSignedIn.get());
     }
@@ -133,9 +130,9 @@ const keyLoad = () => {
       );
     }).then((response) => JSON.parse(response));
   }
-  return fetch('/.netlify/functions/getKeys').then((response) =>
-    response.json(),
-  );
+  return fetch('/.netlify/functions/getKeys').then((response) => {
+    return response.json();
+  });
 };
 
 const gapiLoad = (data) => {
@@ -205,9 +202,6 @@ const listUpcomingEvents = () => {
 };
 
 const AuthAPI = () => {
-  // gapiLoad()
-  //  .then(() => initClient());
-
   return <div className="AuthAPI" />;
 };
 
