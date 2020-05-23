@@ -31,7 +31,7 @@ function UserInfo({ user }) {
 }
 
 UserInfo.propTypes = {
-  user: PropTypes.objectOf(any).isRequired,
+  user: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 /*

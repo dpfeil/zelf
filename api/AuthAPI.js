@@ -6,6 +6,9 @@ import gapi from './gapi';
 const CLIENT_ID = process.env.clientId;
 const API_KEY = process.env.apiKey;
 
+console.log(CLIENT_ID);
+console.log(API_KEY);
+
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
@@ -125,6 +128,8 @@ const gapiLoad = () => {
 };
 
 const initClient = () => {
+  console.log('apiKey', API_KEY);
+  console.log('clientId', CLIENT_ID);
   return gapi.client
     .init({
       apiKey: API_KEY,
