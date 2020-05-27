@@ -1,0 +1,5 @@
+.container {
+  display: grid;
+  grid-template-columns: [left-start] auto [left-end middle-start] 1024px [middle-end right-start] auto [right-end];
+  grid-template-rows: [row1-start] max-content [row1-end] 100px [third-line] auto [last-line];
+}

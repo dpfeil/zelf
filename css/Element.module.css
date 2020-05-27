@@ -1,0 +1,8 @@
+.element {
+  padding: 8px;
+}
+
+.innerElement {
+  outline: 1px solid #cdcdcd;
+  padding: 8px;
+}
