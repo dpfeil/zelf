@@ -4,6 +4,7 @@ exports.handler = (event, context, callback) => {
     body: JSON.stringify({
       clientId: process.env.clientId,
       apiKey: process.env.apiKey,
+      pocketKey: process.env.pocketKey,
     }),
   });
 };
