@@ -10,18 +10,19 @@ import { MainValues, MainContext } from '../context/MainContext';
 import { UserContext } from '../context/UserContext';
 import { CustomNavbar } from '../modules';
 import config from '../firebase-config';
+import { useAuth, useFirebase } from '../hooks';
 
 const useGapiAuth =
   typeof window === 'undefined'
     ? require('../api/FakeGapiAuth').default
     : require('../api/AuthAPI').useGapiAuth;
-
+/*
 const AuthAPI = dynamic(
   () => import('../api/AuthAPI').then((mod) => mod.AuthAPI),
   {
     ssr: false,
   },
-);
+);*/
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
@@ -40,20 +41,20 @@ const style = {
 export default function MyApp({ Component, pageProps }) {
   const { initializing, user } = useGapiAuth();
 
-  /*
-  console.log('initializing');
-  console.log(initializing);
-  console.log('user');
-  console.log(user);
-  */
+  const { fbinitializing, fbuser } = useAuth();
+
+  const { services } = useFirebase(
+    'users',
+    fbuser !== null && 'uid' in fbuser ? fbuser.uid : null,
+    { services: {} },
+  );
 
   return (
     <div style={style}>
       <UserContext.Provider value={{ user }}>
-        <MainContext.Provider value={MainValues}>
+        <MainContext.Provider value={{ ...MainValues, services }}>
           <CustomNavbar />
           <Component {...pageProps} />
-          <AuthAPI />
         </MainContext.Provider>
       </UserContext.Provider>
     </div>

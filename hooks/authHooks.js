@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { UserContext } from '../context/UserContext';
+import 'firebase/firestore';
+import { UserContext, MainContext } from '../context';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -12,17 +13,41 @@ export const useSession = () => {
   return user;
 };
 
+export const useServices = () => {
+  const { services } = useContext(MainContext);
+  return services;
+};
+
+export const useFirebase = (collection, doc, def) => {
+  const [state, setState] = useState(def);
+
+  function onChange(doc) {
+    setState(doc.data());
+  }
+
+  useEffect(() => {
+    if (doc !== null) {
+      var db = firebase.firestore();
+      var docRef = db.collection(collection).doc(doc);
+      var unsubscribe = docRef.onSnapshot(onChange);
+      return () => unsubscribe();
+    }
+  }, [doc]);
+
+  return state;
+};
+
 export const useAuth = () => {
   const [state, setState] = useState(() => {
-    const user = firebase.auth().currentUser;
+    const fbuser = firebase.auth().currentUser;
     return {
-      initializing: !user,
-      user,
+      fbinitializing: !fbuser,
+      fbuser,
     };
   });
 
-  function onChange(user) {
-    setState({ initializing: false, user });
+  function onChange(fbuser) {
+    setState({ fbinitializing: false, fbuser });
   }
 
   useEffect(() => {

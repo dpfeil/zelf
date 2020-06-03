@@ -1,8 +1,6 @@
 import { Button } from '@blueprintjs/core';
 import { useTodos, useSession } from '../hooks';
-import { Container, Element, Calendar } from '../modules';
-
-// import { CalendarAPI } from '../api';
+import { Container, Element, Calendar, PocketModule } from '../modules';
 
 const style = {
   gridColumnStart: 'middle-start',
@@ -29,6 +27,9 @@ export default function Index() {
       </Element>
       <Element style={style}>
         <Calendar />
+      </Element>
+      <Element style={style}>
+        <PocketModule />
       </Element>
     </Container>
   );

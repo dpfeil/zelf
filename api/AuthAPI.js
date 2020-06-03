@@ -2,10 +2,8 @@ import { useState, useEffect } from 'react';
 import * as firebase from 'firebase/app';
 import fetch from 'cross-fetch';
 import 'firebase/auth';
+import 'firebase/firestore';
 import gapi from './gapi';
-
-const CLIENT_ID = process.env.clientId;
-const API_KEY = process.env.apiKey;
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = [
@@ -89,6 +87,7 @@ const handleIsSignedIn = (isSignedIn) => {
           photoURL: user.photoURL,
         });
       });
+    //.then({});
   } else {
     console.log('gapi: user is not signed in');
   }
@@ -120,16 +119,6 @@ const googleSignOut = () => {
 };
 
 const keyLoad = () => {
-  if (typeof API_KEY !== 'undefined') {
-    return new Promise((resolve) => {
-      resolve(
-        JSON.stringify({
-          clientId: CLIENT_ID,
-          apiKey: API_KEY,
-        }),
-      );
-    }).then((response) => JSON.parse(response));
-  }
   return fetch('/.netlify/functions/getKeys').then((response) => {
     return response.json();
   });
@@ -178,37 +167,20 @@ const listUpcomingEvents = () => {
       orderBy: 'startTime',
     })
     .then((response) => {
-      let text = '';
-      console.log('list events');
       const events = response.result.items;
-      // appendPre('Upcoming events:');
 
+      let eventsMap = [<div>No upcoming events found.</div>];
       if (events.length > 0) {
-        for (let i = 0; i < events.length; i += 1) {
-          const event = events[i];
+        eventsMap = events.map((event) => {
           let when = event.start.dateTime;
           if (!when) {
             when = event.start.date;
           }
-          text += `${event.summary} (${when})\n`;
-          // appendPre(`${event.summary} (${when})`);
-        }
-      } else {
-        text = 'No upcoming events found.';
-        // appendPre('No upcoming events found.');
+          return <div>{`${event.summary} (${when})`}</div>;
+        });
       }
-      return text;
+      return eventsMap;
     });
 };
 
-const AuthAPI = () => {
-  return <div className="AuthAPI" />;
-};
-
-export {
-  AuthAPI,
-  googleSignIn,
-  googleSignOut,
-  listUpcomingEvents,
-  useGapiAuth,
-};
+export { googleSignIn, googleSignOut, listUpcomingEvents, useGapiAuth };
