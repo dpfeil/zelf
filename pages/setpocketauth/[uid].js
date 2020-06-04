@@ -4,6 +4,13 @@ import 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { Container, Element } from '../../modules';
 
+const style = {
+  gridColumnStart: 'middle-start',
+  gridColumnEnd: 'middle-end',
+  // gridRowStart: 'row1-start',
+  // gridRowEnd: 'row1-end',
+};
+
 const getPocketCode = (uid) => {
   var db = firebase.firestore();
   var docRef = db.collection('users').doc(uid);
