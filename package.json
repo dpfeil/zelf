@@ -25,12 +25,13 @@
   "dependencies": {
     "@blueprintjs/core": "^3.28.1",
     "axios": "^0.19.2",
-    "cross-fetch": "^3.0.4",
-    "firebase": "^7.14.6",
+    "cross-fetch": "^3.0.6",
+    "firebase": "^7.23.0",
     "next": "^9.4.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "twilio": "^3.49.4"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
