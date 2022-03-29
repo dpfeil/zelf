@@ -94,8 +94,8 @@ const PocketModule = () => {
         </Button>
 
         <div>
-          {Object.keys(articals).map((article) => (
-            <div>{article.resolved_title}</div>
+          {Object.keys(articals).map((articleKey) => (
+            <div>{articals[articleKey].resolved_title}</div>
           ))}
         </div>
       </div>
