@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@blueprintjs/core';
 import fetch from 'cross-fetch';
 import * as firebase from 'firebase/app';
@@ -67,12 +68,20 @@ const initialize = () => {
     });
 };
 
-const printPocketGet = (access_token) => {
-  pocketGet(access_token).then((response) => console.log(response));
-};
+
 
 const PocketModule = () => {
+  const [articals, setArticals] = useState({});
   const services = useServices();
+
+
+  const printPocketGet = (access_token) => {
+    pocketGet(access_token).then((response) => {
+      setArticals(response.list);
+      console.log(response);
+    });
+  };
+
   if ('pocket' in services && services.pocket.state === 'AUTHORIZED') {
     return (
       <div>
@@ -83,6 +92,12 @@ const PocketModule = () => {
         <Button onClick={() => printPocketGet(services.pocket.access_token)}>
           Get
         </Button>
+
+        <div>
+          {Object.keys(articals).map((article) => (
+            <div>{article.resolved_title}</div>
+          ))}
+        </div>
       </div>
     );
   }
